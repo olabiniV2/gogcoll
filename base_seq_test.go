@@ -59,3 +59,25 @@ func (s *baseSeqSuite) Test_Filter_filtersTheSequence() {
 	s.False(fs.HasNext())
 	s.Equal(0, fs.Next())
 }
+
+func (s *baseSeqSuite) Test_simpleFullSeq_works() {
+	it := &Slice[int]{1, 2, 3, 4}
+	its := ToSeq[int](it)
+
+	fs := FullSeqFrom[int](its)
+
+	s.True(fs.HasNext())
+	s.Equal(1, fs.Next())
+
+	s.True(fs.HasNext())
+	s.Equal(2, fs.Next())
+
+	s.True(fs.HasNext())
+	s.Equal(3, fs.Next())
+
+	s.True(fs.HasNext())
+	s.Equal(4, fs.Next())
+
+	s.False(fs.HasNext())
+	s.Equal(0, fs.Next())
+}

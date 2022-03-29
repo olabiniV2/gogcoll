@@ -28,3 +28,21 @@ func (s *baseSeq[T]) Filter(p Predicate[T]) Seq[T] {
 	sq.self = sq
 	return sq
 }
+
+type simpleFullSeq[T any] struct {
+	baseSeq[T]
+}
+
+func (s *simpleFullSeq[T]) Next() T {
+	return s.self.Next()
+}
+
+func (s *simpleFullSeq[T]) HasNext() bool {
+	return s.self.HasNext()
+}
+
+func FullSeqFrom[T any](s BasicSeq[T]) Seq[T] {
+	sq := &simpleFullSeq[T]{}
+	sq.self = s
+	return sq
+}
