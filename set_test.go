@@ -102,3 +102,26 @@ func (s *setSuite) Test_simpleSet_SubSetOf_works() {
 	s.False(set.SubSetOf(otherSet1))
 	s.True(set.SubSetOf(otherSet2))
 }
+
+func (s *setSuite) Test_simpleSet_Each_doesntDoAnythingForNilReceiver() {
+	var set *simpleSet[int]
+	set.Each(func(int) {
+		s.Fail("each should not be invoked for an empty set")
+	})
+}
+
+func (s *setSuite) Test_simpleSet_Each_isCalledForAnElement() {
+	set := SetFrom(42)
+	res := []int{}
+	set.Each(func(a int) {
+		res = append(res, a)
+	})
+
+	s.Equal([]int{42}, res)
+}
+
+func (s *setSuite) Test_simpleSet_Iter_returnsItself() {
+	set := SetFrom(42)
+
+	s.Equal(set, set.Iter())
+}
