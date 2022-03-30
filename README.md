@@ -1,6 +1,9 @@
 # Golang Generic Collections - gogcoll
 
+[![Build Status](https://github.com/olabiniV2/gogcoll/actions/workflows/ci.yml/badge.svg)](https://github.com/olabiniV2/gogcoll/actions/workflows/ci.yml)
+[![Coverage Status](https://coveralls.io/repos/github/olabiniV2/gogcoll/badge.svg?branch=main)](https://coveralls.io/github/olabiniV2/gogcoll?branch=main)
 [![Go Reference](https://pkg.go.dev/badge/github.com/olabiniV2/gogcoll.svg)](https://pkg.go.dev/github.com/olabiniV2/gogcoll)
+[![Go Report Card](https://goreportcard.com/badge/github.com/olabiniV2/gogcoll)](https://goreportcard.com/report/github.com/olabiniV2/gogcoll)
 
 A small collection of useful generic Golang collections. There are two helpful collection interfaces. `Iterator[T]` is
 an eager iteration primitive, while `Seq[T]` is lazy. The full `Seq[T]` comes with some helpful methods, which implies a
