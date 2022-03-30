@@ -1,17 +1,36 @@
 package gogcoll
 
+// Proc1 is a procedure that takes one argument and doesn't return any result
 type Proc1[A any] func(A)
+
+// Proc2 is a procedure that takes two arguments and doesn't return any result
 type Proc2[A1, A2 any] func(A1, A2)
+
+// Proc3 is a procedure that takes three arguments and doesn't return any result
 type Proc3[A1, A2, A3 any] func(A1, A2, A3)
 
+// FixedFunction is a function that doesn't take any arguments and returns one result
 type FixedFunction[R any] func() R
+
+// Func1 is a function of one argument to one result
 type Func1[A, R any] func(A) R
+
+// Func2 is a function of two arguments to one result
 type Func2[A1, A2, R any] func(A1, A2) R
+
+// Func3 is a function of three arguments to one result
 type Func3[A1, A2, A3, R any] func(A1, A2, A3) R
+
+// FuncN is a function of a variable number of arguments to one result
 type FuncN[A, R any] func(...A) R
 
+// Predicate is a function that takes one argument and returns true or false
 type Predicate[A any] Func1[A, bool]
+
+// Predicate2 is a function that takes two arguments and returns true or false
 type Predicate2[A1, A2 any] Func2[A1, A2, bool]
+
+// Predicate3 is a function that takes three arguments and returns true or false
 type Predicate3[A1, A2, A3 any] Func3[A1, A2, A3, bool]
 
 // Compose allows you to chain methods making the order of application
@@ -71,18 +90,24 @@ func (f FuncN[A, R]) Partial(v A) FuncN[A, R] {
 	}
 }
 
+// And will return a new Predicate that is only true if both given Predicates return true for the
+// argument given
 func (p Predicate[A]) And(p2 Predicate[A]) Predicate[A] {
 	return func(v A) bool {
 		return p(v) && p2(v)
 	}
 }
 
+// Or will return a new Predicate that is only true if at least one of the given Predicates
+// return true for the argument given
 func (p Predicate[A]) Or(p2 Predicate[A]) Predicate[A] {
 	return func(v A) bool {
 		return p(v) || p2(v)
 	}
 }
 
+// Xor will return a new Predicate that is only true if exactly one of the given Predicates
+// return true for the argument given
 func (p Predicate[A]) Xor(p2 Predicate[A]) Predicate[A] {
 	return func(v A) bool {
 		v1 := p(v)
@@ -91,24 +116,32 @@ func (p Predicate[A]) Xor(p2 Predicate[A]) Predicate[A] {
 	}
 }
 
+// Not returns a new Predicate that gives the inverse response for the given argument
+// that the original predicate would have given.
 func (p Predicate[A]) Not() Predicate[A] {
 	return func(v A) bool {
 		return !p(v)
 	}
 }
 
+// And will return a new Predicate that is only true if both given Predicates return true for the
+// arguments given
 func (p Predicate2[A1, A2]) And(p2 Predicate2[A1, A2]) Predicate2[A1, A2] {
 	return func(a1 A1, a2 A2) bool {
 		return p(a1, a2) && p2(a1, a2)
 	}
 }
 
+// Or will return a new Predicate that is only true if at least one of the given Predicates
+// return true for the arguments given
 func (p Predicate2[A1, A2]) Or(p2 Predicate2[A1, A2]) Predicate2[A1, A2] {
 	return func(a1 A1, a2 A2) bool {
 		return p(a1, a2) || p2(a1, a2)
 	}
 }
 
+// Xor will return a new Predicate that is only true if exactly one of the given Predicates
+// return true for the arguments given
 func (p Predicate2[A1, A2]) Xor(p2 Predicate2[A1, A2]) Predicate2[A1, A2] {
 	return func(a1 A1, a2 A2) bool {
 		v1 := p(a1, a2)
@@ -117,6 +150,8 @@ func (p Predicate2[A1, A2]) Xor(p2 Predicate2[A1, A2]) Predicate2[A1, A2] {
 	}
 }
 
+// Not returns a new Predicate that gives the inverse response for the given arguments
+// that the original predicate would have given.
 func (p Predicate2[A1, A2]) Not() Predicate2[A1, A2] {
 	return func(a1 A1, a2 A2) bool {
 		return !p(a1, a2)

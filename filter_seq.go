@@ -1,5 +1,7 @@
 package gogcoll
 
+// filterSeq is a Seq implementation that is returned from most Filter methods on
+// other sequences.
 type filterSeq[T any] struct {
 	baseSeq[T]
 	p         Predicate[T]
@@ -22,6 +24,7 @@ func (s *filterSeq[T]) readNext() {
 	}
 }
 
+// Next is part of the implemention of BasicSeq
 func (s *filterSeq[T]) Next() T {
 	s.readNext()
 	if s.hasNext {
@@ -31,6 +34,7 @@ func (s *filterSeq[T]) Next() T {
 	return zero[T]()
 }
 
+// HasNext is part of the implemention of BasicSeq
 func (s *filterSeq[T]) HasNext() bool {
 	s.readNext()
 	return s.hasNext

@@ -7,19 +7,35 @@ type Set[T comparable] interface {
 	Iterable[T]
 	Iterator[T]
 
+	// Add will add the given element to the set. If the element already is in the set,
+	// this method doesn't do anything.
 	Add(T)
+	// AddAll adds all the given arguments to the set, using the same logic as Add
 	AddAll(...T)
+	// Intersection returns a new Set that represents the intersection between this
+	// set and the argument
 	Intersection(Set[T]) Set[T]
+	// Union returns a new Set that represents the union of this set and the argument
 	Union(Set[T]) Set[T]
+	// Difference returns a new Set containing only the elements from the receiver that
+	// are not in the argument set
 	Difference(Set[T]) Set[T]
+	// SubSetOf returns true if the receiver Set is a sub set of the argument set
 	SubSetOf(Set[T]) bool
+	// Equal returns true if the receiver contains the same elements as the argument set
 	Equal(Set[T]) bool
+	// Contains returns true if the given argument is in the set
 	Contains(T) bool
+	// Size returns the number of elements in the set
 	Size() int
+	// Empty returns true if this is the empty set
 	Empty() bool
+	// ToSlice will return a slice with each element, in an undefined order
 	ToSlice() []T
 }
 
+// simpleSet implements the Set interface using an underlying map from the Golang
+// core library
 type simpleSet[T comparable] struct {
 	values  map[T]bool
 	keyView Keys[T, bool]
